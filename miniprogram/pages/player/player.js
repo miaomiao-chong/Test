@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isplaying:false,   //是否自动播放
+    isplaying:false,   //是否正在播放
     islyricShow:false, //当前歌词是否显示
     musicUrl:{
       url:'',
@@ -41,32 +41,12 @@ Page({
    backgroundAudioManager.stop()
    let that=this
   
-   //得到歌曲播放的url
-  //  下面注释的改为用云函数实现
-  //  wx.request({
-  //     url: 'https://api.imjad.cn/cloudmusic/?type=song&id='+musicId,
-  //     success:function(e){
-  //       that.setData({
-  //         'musicUrl.url':e.data.data[0].url
-  //       })
-  //     }
-  //   }),
-  //   //得到歌词
-  //   wx.request({
-  //     url: 'https://api.imjad.cn/cloudmusic/?type=lyric&id='+musicId+'&br=128000',
-  //     success:function(e){
-  //       that.setData({
-  //         'musicUrl.lyric':e.data.lrc.lyric
-  //       })
-  //     }
-  //   })
-  //还没有请求到数据就不播放
   this.setData({
     isplaying:false
   })
   //解决bug: 列表随着播放页面高亮
   app.setPlayingMusicId(musicId)
-  
+
    wx.showLoading({
     title: '加载中',
   })
@@ -159,6 +139,17 @@ Page({
   },
   timeUpdate(event){
     this.selectComponent('.lyric').update(event.detail.currentTime)
+  },
+//解决系统播放暂停与小程序不同步问题
+  onplay(){
+    this.setData({
+      isplaying:true
+    })
+  },
+  onpause(){
+    this.setData({
+      isplaying:false
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

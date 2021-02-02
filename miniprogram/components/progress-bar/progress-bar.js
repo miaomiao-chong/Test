@@ -83,15 +83,18 @@ Component({
     _bindBGMEvent(){
       backgroundAudioManager.onPlay(()=>{
         console.log("onplay")
+        this.triggerEvent("musicPlay")
         // isMoving=false
       })
    
       backgroundAudioManager.onStop(() => {
         console.log('onStop')
+     
       })
 
       backgroundAudioManager.onPause(() => {
         console.log('Pause')
+        this.triggerEvent("musicPause")
       })
 
       backgroundAudioManager.onWaiting(() => {

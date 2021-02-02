@@ -10,7 +10,10 @@
   <s-lyric islyricShow="{{!islyricShow}}" bindtap="onChangeLyricShow" lyric="{{musicUrl.musicLyric}}" class="lyric"></s-lyric>
   <!-- 进度条组件 -->
   <view class="progress-bar">
-    <s-progress-bar bindmusicEnd="onNext" bind:timeUpdate="timeUpdate"></s-progress-bar>
+    <s-progress-bar bindmusicEnd="onNext" bind:timeUpdate="timeUpdate"
+    bindmusicPlay="onplay"
+    bindmusicPause="onpause"
+    ></s-progress-bar>
   </view>
 
 
