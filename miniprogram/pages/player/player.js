@@ -1,4 +1,5 @@
 // miniprogram/pages/player/player.js
+const app=getApp()
 //缓存取出来的列表
 let musicInfo={}
 //正在播放音乐的下标 也不需要在界面显示 全局的 下一首上一首都要用到它
@@ -39,6 +40,7 @@ Page({
    //一开始停止播放 后面请求到数据再开始播放
    backgroundAudioManager.stop()
    let that=this
+  
    //得到歌曲播放的url
   //  下面注释的改为用云函数实现
   //  wx.request({
@@ -62,6 +64,9 @@ Page({
   this.setData({
     isplaying:false
   })
+  //解决bug: 列表随着播放页面高亮
+  app.setPlayingMusicId(musicId)
+  
    wx.showLoading({
     title: '加载中',
   })
@@ -137,14 +142,14 @@ Page({
     if (nowPlayingIndex < 0) {
       nowPlayingIndex = musicInfo.length - 1
     }
-    this. _getmusicDetail(musicInfo[nowPlayingIndex].id,nowPlayingIndex)
+    this._getmusicDetail(musicInfo[nowPlayingIndex].id,nowPlayingIndex)
   },
   onNext() {
     nowPlayingIndex++
     if (nowPlayingIndex === musicInfo.length) {
       nowPlayingIndex = 0
     }
-    this. _getmusicDetail(musicInfo[nowPlayingIndex].id,nowPlayingIndex)
+    this._getmusicDetail(musicInfo[nowPlayingIndex].id,nowPlayingIndex)
   },
   onChangeLyricShow(){
     this.setData({

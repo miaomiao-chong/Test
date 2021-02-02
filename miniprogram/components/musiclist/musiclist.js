@@ -1,4 +1,4 @@
-
+const app=getApp()
 
 // components/musiclist/musiclist.js
 Component({
@@ -16,6 +16,15 @@ Component({
    */
   data: {
     playingId:-1
+  },
+  pageLifetimes:{
+    show(){
+      let playingId=app.getPlayingMUsicId()
+      this.setData({
+        playingId
+      })
+
+    }
   },
 
   /**
